@@ -5,6 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.util.UUID;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.ArrayList;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 @Entity(name="users")
 public class User implements Serializable {
@@ -20,6 +26,9 @@ public class User implements Serializable {
 
     @Column
     boolean enabled = true;
+
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    Collection<UserAuthority> userAuthorities = new ArrayList<>();
 
     User(){}
 
@@ -51,6 +60,15 @@ public class User implements Serializable {
 
     public void setEnabled(boolean enabled){
         this.enabled=enabled;
+    }
+
+    public Collection<UserAuthority> getUserAuthorities() {
+        return Collections.unmodifiableCollection(this.userAuthorities);
+    }
+
+    public void grantAuthority(String authority) {
+        UserAuthority userAuthority = new UserAuthority(this, authority);
+        this.userAuthorities.add(userAuthority);
     }
 
 }
