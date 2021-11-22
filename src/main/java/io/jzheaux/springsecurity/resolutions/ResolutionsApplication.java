@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
+
 @SpringBootApplication
 public class ResolutionsApplication {
 
